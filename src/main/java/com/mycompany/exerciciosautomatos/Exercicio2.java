@@ -4,11 +4,11 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-// ##########################################################################
-// Implemente um AFD que aceita todas as strings binárias que terminam com 1.
-// ##########################################################################
+// ##############################################
+// AFD que aceita strings com quantidade par de 0.
+// ##############################################
 
-public class Exercicio1 {
+public class Exercicio2 {
     
     enum Estado {
         Q0,
@@ -22,9 +22,9 @@ public class Exercicio1 {
             case Q0:
                 switch (simbolo) {
                     case '0':
-                        return Estado.Q0;
-                    case '1':
                         return Estado.Q1;
+                    case '1':
+                        return Estado.Q0;
                     default:
                         throw new IllegalArgumentException("Símbolo inválido: " + simbolo);
                 }
@@ -53,7 +53,7 @@ public class Exercicio1 {
         }
 
         // Estado de aceitação
-        return estado == Estado.Q1;
+        return estado == Estado.Q0;
     }
     
     public static void main(String[] args) {

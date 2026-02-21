@@ -4,11 +4,11 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-// ##########################################################################
-// Implemente um AFD que aceita todas as strings binárias que terminam com 1.
-// ##########################################################################
+// #####################################################################
+// AFD que aceita strings que possuem ao menos um 1 em qualquer posição.
+// #####################################################################
 
-public class Exercicio1 {
+public class Exercicio3 {
     
     enum Estado {
         Q0,
@@ -32,7 +32,7 @@ public class Exercicio1 {
             case Q1:
                 switch (simbolo) {
                     case '0':
-                        return Estado.Q0;
+                        return Estado.Q1;
                     case '1':
                         return Estado.Q1;
                     default:

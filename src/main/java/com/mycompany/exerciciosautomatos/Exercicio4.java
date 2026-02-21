@@ -4,11 +4,11 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-// ##########################################################################
-// Implemente um AFD que aceita todas as strings binárias que terminam com 1.
-// ##########################################################################
+// ######################################################
+// AFD que aceita strings que não possuem a substring 11.
+// ######################################################
 
-public class Exercicio1 {
+public class Exercicio4 {
     
     enum Estado {
         Q0,
@@ -34,7 +34,7 @@ public class Exercicio1 {
                     case '0':
                         return Estado.Q0;
                     case '1':
-                        return Estado.Q1;
+                        throw new NoTransitionException();
                     default:
                         throw new IllegalArgumentException("Símbolo inválido: " + simbolo);
                 }
@@ -47,13 +47,16 @@ public class Exercicio1 {
     // Reconhecedor do autômato
     static boolean reconhece(String cadeia) {
         Estado estado = Estado.Q0; 
-
-        for (int i = 0; i < cadeia.length(); i++) {
-            estado = transicao(estado, cadeia.charAt(i));
+        try {
+            for (int i = 0; i < cadeia.length(); i++) {
+                estado = transicao(estado, cadeia.charAt(i));
+            }
+        } catch (NoTransitionException e) {
+            return false;
         }
 
         // Estado de aceitação
-        return estado == Estado.Q1;
+        return estado == Estado.Q1 || estado == Estado.Q0;
     }
     
     public static void main(String[] args) {

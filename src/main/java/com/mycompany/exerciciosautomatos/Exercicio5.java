@@ -4,11 +4,11 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-// ##########################################################################
-// Implemente um AFD que aceita todas as strings binárias que terminam com 1.
-// ##########################################################################
+// #####################################################
+// AFD que aceita strings sobre {a,b} que começam com a.
+// #####################################################
 
-public class Exercicio1 {
+public class Exercicio5 {
     
     enum Estado {
         Q0,
@@ -21,19 +21,19 @@ public class Exercicio1 {
 
             case Q0:
                 switch (simbolo) {
-                    case '0':
-                        return Estado.Q0;
-                    case '1':
+                    case 'a':
                         return Estado.Q1;
+                    case 'b':
+                        throw new NoTransitionException();
                     default:
                         throw new IllegalArgumentException("Símbolo inválido: " + simbolo);
                 }
 
             case Q1:
                 switch (simbolo) {
-                    case '0':
-                        return Estado.Q0;
-                    case '1':
+                    case 'a':
+                        return Estado.Q1;
+                    case 'b':
                         return Estado.Q1;
                     default:
                         throw new IllegalArgumentException("Símbolo inválido: " + simbolo);
@@ -48,8 +48,12 @@ public class Exercicio1 {
     static boolean reconhece(String cadeia) {
         Estado estado = Estado.Q0; 
 
-        for (int i = 0; i < cadeia.length(); i++) {
-            estado = transicao(estado, cadeia.charAt(i));
+        try {
+            for (int i = 0; i < cadeia.length(); i++) {
+                estado = transicao(estado, cadeia.charAt(i));
+            }
+        } catch (NoTransitionException e) {
+            return false;
         }
 
         // Estado de aceitação
@@ -61,7 +65,7 @@ public class Exercicio1 {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Digite uma cadeia binária (0 e 1): ");
+        System.out.print("Digite uma cadeia de Σ = {a,b}: ");
         String cadeia = scanner.nextLine().trim();
 
         try {
